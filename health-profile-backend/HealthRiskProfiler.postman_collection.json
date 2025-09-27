@@ -1,0 +1,242 @@
+{
+  "info": {
+    "name": "Health Risk Profiler API",
+    "description": "Complete API collection for testing the Health Risk Profiler endpoints with dynamic data",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "{{$randomUUID}}",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        },
+        "description": "Check server health and uptime"
+      },
+      "response": []
+    },
+    {
+      "name": "Parse Health Data - Complete Profile",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"text\": \"Age: 42\\nSmoker: yes\\nExercise: rarely\\nDiet: high sugar and processed foods\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/parse",
+          "host": ["{{baseUrl}}"],
+          "path": ["parse"]
+        },
+        "description": "Parse complete health profile with all required fields"
+      },
+      "response": []
+    },
+    {
+      "name": "Parse Health Data - JSON Format",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"{{$randomUUID}}\",\n  \"text\": \"{\\\"age\\\":35,\\\"smoker\\\":false,\\\"exercise\\\":\\\"daily\\\",\\\"diet\\\":\\\"balanced\\\"}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/parse",
+          "host": ["{{baseUrl}}"],
+          "path": ["parse"]
+        },
+        "description": "Parse health data from JSON format input"
+      },
+      "response": []
+    },
+    {
+      "name": "Parse Health Data - Natural Language",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"{{$randomUUID}}\",\n  \"text\": \"I am 28 years old, I do not smoke, I exercise 3 times a week, and I eat a healthy Mediterranean diet\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/parse",
+          "host": ["{{baseUrl}}"],
+          "path": ["parse"]
+        },
+        "description": "Parse health data from natural language input"
+      },
+      "response": []
+    },
+    {
+      "name": "Parse Health Data - Incomplete (Guardrail Test)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"{{$randomUUID}}\",\n  \"text\": \"Age: 30\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/parse",
+          "host": ["{{baseUrl}}"],
+          "path": ["parse"]
+        },
+        "description": "Test guardrail with insufficient data (only age provided)"
+      },
+      "response": []
+    },
+    {
+      "name": "Compute Risk - High Risk Profile",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"answers\": {\n    \"age\": 42,\n    \"smoker\": true,\n    \"exercise\": \"rarely\",\n    \"diet\": \"high sugar\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/risk",
+          "host": ["{{baseUrl}}"],
+          "path": ["risk"]
+        },
+        "description": "Compute risk for high-risk profile (smoking, poor diet, low exercise)"
+      },
+      "response": []
+    },
+    {
+      "name": "Compute Risk - Low Risk Profile",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"{{$randomUUID}}\",\n  \"answers\": {\n    \"age\": 25,\n    \"smoker\": false,\n    \"exercise\": \"daily\",\n    \"diet\": \"balanced\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/risk",
+          "host": ["{{baseUrl}}"],
+          "path": ["risk"]
+        },
+        "description": "Compute risk for low-risk profile (young, non-smoker, active, healthy diet)"
+      },
+      "response": []
+    },
+    {
+      "name": "Compute Risk - Medium Risk Profile",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"{{$randomUUID}}\",\n  \"answers\": {\n    \"age\": 50,\n    \"smoker\": false,\n    \"exercise\": \"sometimes\",\n    \"diet\": \"average\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/risk",
+          "host": ["{{baseUrl}}"],
+          "path": ["risk"]
+        },
+        "description": "Compute risk for medium-risk profile (middle-aged, moderate lifestyle)"
+      },
+      "response": []
+    },
+    {
+      "name": "Parse Validation Error Test",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"\",\n  \"text\": \"\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/parse",
+          "host": ["{{baseUrl}}"],
+          "path": ["parse"]
+        },
+        "description": "Test validation error handling with empty fields"
+      },
+      "response": []
+    },
+    {
+      "name": "Risk Validation Error Test",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"\",\n  \"answers\": {}\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/risk",
+          "host": ["{{baseUrl}}"],
+          "path": ["risk"]
+        },
+        "description": "Test validation error handling with empty fields"
+      },
+      "response": []
+    }
+  ]
+}
