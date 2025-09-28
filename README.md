@@ -412,16 +412,6 @@ curl -X POST https://your-ngrok-url.ngrok.io/risk \
 - Test coverage requirements
 - Comprehensive documentation
 
-## 📄 License & Disclaimer
-
-### License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-### Medical Disclaimer
-
-This application provides educational health risk assessments and should not be used as a substitute for professional medical advice, diagnosis, or treatment. Always consult with qualified healthcare providers for medical concerns.
-
 ## 📞 Support
 
 ### Documentation
