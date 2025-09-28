@@ -1,11 +1,9 @@
 # AI-Powered Health Risk Profiler
+> **A full-stack health risk assessment application that processes health survey data from text and images to provide personalized recommendations.**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-18.0%2B-green.svg)](https://nodejs.org/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-5.0%2B-green.svg)](https://www.mongodb.com/)
 [![React](https://img.shields.io/badge/React-18.0%2B-blue.svg)](https://reactjs.org/)
-
-> **A full-stack health risk assessment application that processes health survey data from text and images to provide personalized recommendations.**
 
 ## Problem Statement
 
